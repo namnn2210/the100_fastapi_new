@@ -13,7 +13,7 @@ origins = [
     "http://the100.vn",
     "https://the100.vn",
     "http://localhost",
-    "http://localhost:8000",
+    "http://localhost:2210",
 ]
 
 app.add_middleware(
@@ -27,4 +27,4 @@ app.add_middleware(
 if __name__ == "__main__":
     app.include_router(category.router, prefix="/api")
     app.include_router(supplier.router, prefix="/api")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=2210)
