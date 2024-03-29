@@ -9,14 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 models.Base.metadata.create_all(bind=db_engine)
 
-origins = [
-    "http://the100.vn",
-    "https://the100.vn",
-    "http://localhost",
-    "http://localhost:2210",
-    "http://103.241.43.112:2210",
-    "http://127.0.0.1:5500"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
