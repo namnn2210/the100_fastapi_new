@@ -6,8 +6,7 @@ supplier_repository = SupplierRepository()
 
 
 def create_supplier(supplier: SupplierBase):
-    supplier_repository.create(**supplier.dict())
-    return supplier
+    return supplier_repository.create(**supplier.dict())
 
 
 def find_supplier(supplier_id: int):

@@ -10,10 +10,11 @@ class CategoryRepository(Repository):
         category = Category(**kwargs)
         try:
             self.db.add(category)
-            self.db.commit()
+            self.db.flush()
             self.db.refresh(category)
+            print(category.__dict__)
             return category
-        except SQLAlchemyError as e:
+        except Exception as e:
             self.db.rollback()
             print("An error occurred while creating the category:", str(e))
             return category
@@ -21,14 +22,14 @@ class CategoryRepository(Repository):
     def find(self, id: int) -> Optional[Category]:
         try:
             return self.db.query(Category).filter(Category.id == id).first()
-        except SQLAlchemyError as e:
+        except Exception as e:
             print("An error occurred while finding the category:", str(e))
             return None
 
     def find_all(self) -> List[Category]:
         try:
             return self.db.query(Category).all()
-        except SQLAlchemyError as e:
+        except Exception as e:
             print("An error occurred while finding all categories:", str(e))
             return []
 
@@ -38,10 +39,10 @@ class CategoryRepository(Repository):
             try:
                 for key, value in kwargs.items():
                     setattr(category, key, value)
-                self.db.commit()
+                self.db.flush()
                 self.db.refresh(category)
                 return category
-            except SQLAlchemyError as e:
+            except Exception as e:
                 self.db.rollback()
                 print("An error occurred while updating the category:", str(e))
                 return None
@@ -52,9 +53,9 @@ class CategoryRepository(Repository):
         if category:
             try:
                 self.db.delete(category)
-                self.db.commit()
+                self.db.flush()
                 return True
-            except SQLAlchemyError as e:
+            except Exception as e:
                 self.db.rollback()
                 print("An error occurred while deleting the category:", str(e))
                 return False

@@ -6,8 +6,7 @@ category_repository = CategoryRepository()
 
 
 def create_category(category: CategoryBase):
-    category_repository.create(**category.dict())
-    return category
+    return category_repository.create(**category.dict())
 
 
 def find_category(category_id: int):

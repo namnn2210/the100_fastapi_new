@@ -10,10 +10,10 @@ class SupplierRepository(Repository):
         supplier = Supplier(**kwargs)
         try:
             self.db.add(supplier)
-            self.db.commit()
+            self.db.flush()
             self.db.refresh(supplier)
             return supplier
-        except SQLAlchemyError as e:
+        except Exception as e:
             self.db.rollback()
             print("An error occurred while creating the supplier:", str(e))
             return supplier
@@ -21,14 +21,14 @@ class SupplierRepository(Repository):
     def find(self, id: int) -> Optional[Supplier]:
         try:
             return self.db.query(Supplier).filter(Supplier.id == id).first()
-        except SQLAlchemyError as e:
+        except Exception as e:
             print("An error occurred while finding the supplier:", str(e))
             return None
 
     def find_all(self) -> List[Supplier]:
         try:
             return self.db.query(Supplier).all()
-        except SQLAlchemyError as e:
+        except Exception as e:
             print("An error occurred while finding all suppliers:", str(e))
             return []
 
@@ -38,10 +38,10 @@ class SupplierRepository(Repository):
             try:
                 for key, value in kwargs.items():
                     setattr(supplier, key, value)
-                self.db.commit()
+                self.db.flush()
                 self.db.refresh(supplier)
                 return supplier
-            except SQLAlchemyError as e:
+            except Exception as e:
                 self.db.rollback()
                 print("An error occurred while updating the supplier:", str(e))
                 return None
@@ -52,9 +52,9 @@ class SupplierRepository(Repository):
         if supplier:
             try:
                 self.db.delete(supplier)
-                self.db.commit()
+                self.db.flush()
                 return True
-            except SQLAlchemyError as e:
+            except Exception as e:
                 self.db.rollback()
                 print("An error occurred while deleting the supplier:", str(e))
                 return False
