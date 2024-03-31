@@ -9,3 +9,4 @@ class SupplierBase(BaseModel):
     name: str
     address: str
     description: str
+    status: bool
