@@ -19,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get('/')
+def hello_world():
+    return{'hello':'world'}
+
 if __name__ == "__main__":
     app.include_router(category.router, prefix="/api")
     app.include_router(supplier.router, prefix="/api")
