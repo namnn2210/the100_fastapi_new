@@ -10,8 +10,7 @@ class SupplierRepository(Repository):
         supplier = Supplier(**kwargs)
         try:
             self.db.add(supplier)
-            self.db.flush()
-            self.db.refresh(supplier)
+            self.db.commit()
             return supplier
         except Exception as e:
             self.db.rollback()
@@ -38,8 +37,7 @@ class SupplierRepository(Repository):
             try:
                 for key, value in kwargs.items():
                     setattr(supplier, key, value)
-                self.db.flush()
-                self.db.refresh(supplier)
+                self.db.commit()
                 return supplier
             except Exception as e:
                 self.db.rollback()
@@ -52,7 +50,7 @@ class SupplierRepository(Repository):
         if supplier:
             try:
                 self.db.delete(supplier)
-                self.db.flush()
+                self.db.commit()
                 return True
             except Exception as e:
                 self.db.rollback()

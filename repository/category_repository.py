@@ -10,9 +10,7 @@ class CategoryRepository(Repository):
         category = Category(**kwargs)
         try:
             self.db.add(category)
-            self.db.flush()
-            self.db.refresh(category)
-            print(category.__dict__)
+            self.db.commit()
             return category
         except Exception as e:
             self.db.rollback()
@@ -39,8 +37,7 @@ class CategoryRepository(Repository):
             try:
                 for key, value in kwargs.items():
                     setattr(category, key, value)
-                self.db.flush()
-                self.db.refresh(category)
+                self.db.commit()
                 return category
             except Exception as e:
                 self.db.rollback()
@@ -53,7 +50,7 @@ class CategoryRepository(Repository):
         if category:
             try:
                 self.db.delete(category)
-                self.db.flush()
+                self.db.commit()
                 return True
             except Exception as e:
                 self.db.rollback()
